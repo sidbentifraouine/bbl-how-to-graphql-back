@@ -2,13 +2,34 @@ const { GraphQLServer } = require('graphql-yoga')
 
 const typeDefs = `
     type Query {
-        quotes: [String!]!
+        quotes: [Quote!]!
+        quote(id: ID!): Quote
+    }
+
+    type Mutation {
+        createQuote(content: String!): Quote!
+    }
+
+    type Quote {
+        id: ID!
+        content: String!
     }
 `
 
+const QUOTES = [{ id: 123, content: 'Hello' }, { id: 1234, content: 'Wesh' }]
+
 const resolvers = {
   Query: {
-    quotes: () => ['Hello', 'Wesh']
+    quotes: () => QUOTES,
+    quote: (parent, queryParams) =>
+      QUOTES.find((quote) => quote.id == queryParams.id)
+  },
+  Mutation: {
+    createQuote: (content) => {
+      const quote = { id: QUOTES.length + 1, content: content }
+      QUOTES.push(quote)
+      return quote
+    }
   }
 }
 
