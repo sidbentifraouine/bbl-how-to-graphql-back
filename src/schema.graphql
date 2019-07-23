@@ -1,0 +1,21 @@
+type Query {
+  memories: [Memory!]!
+  memory(id: ID!): Memory
+}
+
+type Mutation {
+  createMemory(
+    title: String!
+    quote: String!
+    imageUrl: String!
+    authorName: String!
+  ): Memory!
+}
+
+type Memory {
+  id: ID!
+  title: String!
+  quote: String!
+  imageUrl: String!
+  authorName: String!
+}

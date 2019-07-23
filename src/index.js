@@ -1,40 +1,38 @@
 const { GraphQLServer } = require('graphql-yoga')
 
-const typeDefs = `
-    type Query {
-        quotes: [Quote!]!
-        quote(id: ID!): Quote
-    }
-
-    type Mutation {
-        createQuote(content: String!): Quote!
-    }
-
-    type Quote {
-        id: ID!
-        content: String!
-    }
-`
-
-const QUOTES = [{ id: 123, content: 'Hello' }, { id: 1234, content: 'Wesh' }]
+const MEMORIES = [
+  {
+    id: 'memory-1',
+    title: 'De la Kraken',
+    quote: 'Ramène-moi une biére !',
+    imageUrl:
+      'https://cdn.mos.cms.futurecdn.net/0bfa6d1cf85568b40f7c5e89dcacb6d9.jpg',
+    authorName: 'Rico'
+  }
+]
 
 const resolvers = {
   Query: {
-    quotes: () => QUOTES,
-    quote: (parent, queryParams) =>
-      QUOTES.find((quote) => quote.id == queryParams.id)
+    memories: () => MEMORIES,
+    memory: (parent, args) => MEMORIES.find((memory) => memory.id == args.id)
   },
   Mutation: {
-    createQuote: (content) => {
-      const quote = { id: QUOTES.length + 1, content: content }
-      QUOTES.push(quote)
-      return quote
+    createMemory: (parent, { title, quote, imageUrl, authorName }) => {
+      const memory = {
+        id: `memory-${MEMORIES.length + 1}`,
+        title,
+        quote,
+        imageUrl,
+        authorName
+      }
+      MEMORIES.push(memory)
+      return memory
     }
   }
 }
 
 const server = new GraphQLServer({
-  typeDefs,
+  typeDefs: './src/schema.graphql',
   resolvers
 })
 
