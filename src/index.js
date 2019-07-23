@@ -27,6 +27,23 @@ const resolvers = {
       }
       MEMORIES.push(memory)
       return memory
+    },
+    updateMemory: (parent, { id, title, quote, imageUrl, authorName }) => {
+      const memoryIndex = MEMORIES.findIndex((memory) => memory.id === id)
+      const memory = MEMORIES[memoryIndex]
+      const updatedMemory = {
+        ...memory,
+        title: title || memory.title,
+        quote: quote || memory.quote,
+        imageUrl: imageUrl || memory.imageUrl,
+        authorName: authorName || memory.authorName
+      }
+      MEMORIES.splice(memoryIndex, 1, updatedMemory)
+      return updatedMemory
+    },
+    deleteMemory: (parent, { id }) => {
+      const memoryIndex = MEMORIES.findIndex((memory) => memory.id === id)
+      return MEMORIES.splice(memoryIndex, 1)[0]
     }
   }
 }

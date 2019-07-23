@@ -10,6 +10,14 @@ type Mutation {
     imageUrl: String!
     authorName: String!
   ): Memory!
+  updateMemory(
+    id: ID!
+    title: String
+    quote: String
+    imageUrl: String
+    authorName: String
+  ): Memory!
+  deleteMemory(id: ID!): Memory!
 }
 
 type Memory {
