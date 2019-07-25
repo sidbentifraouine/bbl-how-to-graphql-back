@@ -1,0 +1,11 @@
+# The HTTP endpoint for our prisma client
+#endpoint: ''
+endpoint: https://eu1.prisma.sh/sid-bentifraouine-e86c22/bbl-how-to-graphql-back/dev
+
+# Datamodel path
+datamodel: datamodel.prisma
+
+# Location and Language of the generated prisma client
+generate:
+  - generator: javascript-client
+    output: ../src/generated/prisma-client

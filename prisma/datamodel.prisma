@@ -1,0 +1,7 @@
+type Memory {
+  id: ID! @id
+  title: String!
+  quote: String!
+  imageUrl: String!
+  authorName: String!
+}
